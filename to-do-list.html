@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <input type="text" v-model="text">{{ text }}
+    <button type="button" @click="addData">新增</button>
+    <ul>
+      <li v-for="item in list" :key="item.id">
+        {{ item.text }}
+        <button type="button" @click="editData(item)">編輯</button>
+        <button type="button" @click="removeData(item)">刪除</button>
+      </li>
+    </ul>
+    <div v-if="tempData.id">
+      <input type="text" v-model="tempData.text">
+      <button type="button" @click="confirm">確認編輯</button>
+    </div>
+  </div>
+  <!-- <div id="app">
+    <input type="text" v-model="text">{{ text }}
+    <button type="button" @click="addData">新增 todo</button>
+    <ul>
+      <li v-for="item in list" :key="item.id">
+        {{ item.text }}
+        <button type="button" @click="editData(item)">編輯</button>
+      </li>
+    </ul>
+    <hr>
+    <div>
+      <input type="text" v-model="tempData.text">
+      <button type="button" @click="confirm">確認編輯</button>
+    </div>
+  </div> -->
+
+
+  <script type="module">
+    // import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.esm-browser.min.js';
+
+    // const app = {
+    //   data() {
+    //     return {
+    //       text: '',
+    //       list: [],
+    //       tempData: {},
+    //     }
+    //   },
+    //   methods: {
+    //     addData() {
+    //       const newData = {
+    //         id: new Date().getTime(),
+    //         text: this.text
+    //       }
+    //       this.text = '',
+    //         this.list.push(newData)
+    //     },
+    //     editData(item) {
+    //       this.tempData = { ...item };
+    //     },
+    //     confirm() {
+    //       // this.list.forEach((item, i) => {
+    //       //   if (item.id === this.tempData.id) {
+    //       //     this.list[i] = this.tempData;
+    //       //   }
+    //       // })
+    //       const index = this.list.findIndex((item) => {
+    //         return item.id === this.tempData.id
+    //       })
+    //       this.list[index] = this.tempData;
+    //     }
+    //   },
+    // }
+
+    // createApp(app)
+    //   .mount('#app');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.esm-browser.min.js';
+    const app = {
+      data() {
+        return {
+          text: '',
+          list: [],
+          tempData: {},
+        }
+      },
+      methods: {
+        addData() {
+          const newData = {
+            id: new Date().getTime(),
+            text: this.text
+          }
+          this.text = '';
+          this.list.push(newData);
+        },
+        editData(item) {
+          this.tempData = { ...item };
+        },
+        confirm() {
+          this.list.forEach((item, i) => {
+            if (item.id === this.tempData.id) {
+              this.list[i] = this.tempData
+            }
+          })
+          this.tempData = {};
+        },
+        removeData(item) {
+          this.list.forEach((li, i) => {
+            if (li.id === item.id) {
+              this.list[i] = item;
+              this.list.splice(i, 1)
+            }
+          })
+
+        }
+      }
+    }
+
+    createApp(app)
+      .mount('#app')
+  </script>
+</body>
+
+</html>
